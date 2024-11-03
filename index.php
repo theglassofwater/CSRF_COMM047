@@ -1,9 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>PHP Test</title>
-    </head>
-    <body>
-        <?php echo '<p>Hello World</p>'; ?>
-    </body>
-</html>
+<?php 
+
+session_start();
+
+require __DIR__ .  '/inc/header.php'; 
+
+$request_method = strtoupper($_SERVER['REQUEST_METHOD']);
+
+if ($request_method == "GET") { 
+
+
+    require __DIR__ . "/inc/get.php";
+
+
+}
+
+require __DIR__ . '/inc/footer.php';
+
+?>
