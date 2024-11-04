@@ -19,10 +19,12 @@ if ($request_method == "GET") {
 
 if ($request_method == "POST") { 
 
-
+    
     require __DIR__ . "/inc/post.php";
 
-
+    if ($errors) {
+		require	__DIR__ .  '/inc/get.php';
+	}
 }
 
 require __DIR__ . '/inc/footer.php';
