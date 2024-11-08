@@ -1,32 +1,27 @@
 <?php 
-
 session_start();
+require __DIR__ . '/inc/header.php';
 
-require __DIR__ .  '/inc/header.php'; 
-
-$errors = []; // for storing the error messages
-$inputs = []; // for storing sanitized input values
-
-$request_method = strtoupper($_SERVER['REQUEST_METHOD']);
-
-if ($request_method == "GET") { 
-
-
-    require __DIR__ . "/inc/get.php";
-
-
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
 }
 
-if ($request_method == "POST") { 
+$errors = [];
+$inputs = [];
 
-    
-    require __DIR__ . "/inc/post.php";
+// Handle GET request to display the form
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    require __DIR__ . '/inc/change_password.php';
+}
+
+// Handle POST request to process form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require __DIR__ . '/inc/handle_password_change.php';
 
     if ($errors) {
-		require	__DIR__ .  '/inc/get.php';
-	}
+        require __DIR__ . '/inc/change_password.php';
+    }
 }
 
 require __DIR__ . '/inc/footer.php';
-
 ?>
