@@ -31,18 +31,11 @@ In this example, we simulate a scenario where an attacker can change a user's pa
 
 2. **Log In**: Go to `http://localhost:8000/login.php` and log in with the following credentials:
    - **Username**: `user`
-   - **Password**: `password123`
+   - **Password**: `password`
 
 3. **CSRF Attack Simulation**: Open `malicious_page.html` in your browser (simulating the user visiting a malicious site). The page will automatically submit a request to change the user's password to `hacked_password`.
 
 4. **Verify the Attack**: Go back to `http://localhost:8000/login.php`, try logging in with the new password `hacked_password` to confirm the attack was successful.
-
-## How CSRF Works
-
-In this example:
-- **CSRF Attack Vector**: The attacker creates a page (`malicious_page.html`) that auto-submits a form to `change_password.php`, changing the user's password.
-- **Vulnerability**: The server does not check if the request originated from a trusted source, allowing the malicious request to go through.
-- **Session Cookie**: Since the user is logged in, the browser includes the session cookie, which authenticates the user on the backend and allows the password change.
 
 ## Preventing CSRF
 
@@ -52,7 +45,3 @@ For example:
 - Generate a unique CSRF token for each session.
 - Include the CSRF token as a hidden field in the form.
 - Validate the token on the server before processing the request.
-
-## License
-
-This project is for educational purposes only.
