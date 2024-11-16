@@ -1,11 +1,12 @@
-The site allows users to login, then to change their password. 
+The site allows users to login, then to change their password.
 On the change password page, there is also an advert that gives you free money!
 When the advert is clicked, it sends a post request on behalf of the user, changing the password to 'hacked_password'.
 You can check if the password has changed by trying to login again.
-To prevent the CSRF attack, there is a tick box below the login input boxes that activates CSRF protection, stoping the CSRF attack from affecting the account. This CSRF pretection works by 
-, but it lacks CSRF protection, making it vulnerable to an attack.
+To prevent the CSRF attack, there is a tick box below the login input boxes that activates CSRF protection, stopping the CSRF attack from affecting the account. 
 
-In this example, we simulate a scenario where an attacker can change a user's password on a vulnerable banking website. 
+This CSRF pretection works by generating a unique CSRF token for each user session and embedding it as a hidden field and checking for it in forms, like when user requests a password change. 
+<!-- The token is also stored on the server in the user's session. -->
+
 
 ## Setup
 
