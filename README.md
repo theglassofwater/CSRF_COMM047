@@ -3,10 +3,10 @@ In this example, we simulate a scenario where an attacker can change a user's pa
 ## Setup
 
 1. Clone this repo, and have PHP and SQLite installed.
-2. Set up the SQLite database by running `db_setup.php` to create a sample user.
+2. Run this PHP script that sets up the database and adds 3 sample users.
 
     ```bash
-    php db_setup.php
+    php database/db_setup.php
     ```
 
 3. Start a local PHP server:
@@ -17,18 +17,9 @@ In this example, we simulate a scenario where an attacker can change a user's pa
 
 5. Go to `http://localhost:8000`.
 
-## Files
-
-- **db_setup.php**: Initializes the SQLite database with a sample user (username: `user`, password: `password123`).
-- **login.php**: Allows users to log in and start a session.
-- **change_password.php**: Allows logged-in users to change their password (vulnerable to CSRF).
-- **malicious_page.html**: Simulates an attacker’s page that performs a CSRF attack to change the user's password to `hacked_password`.
-
 ## Usage
 
-1. **Initialize the Database**: Run `db_setup.php` to create the SQLite database with a sample user.
-
-2. **Log In**: Go to `http://localhost:8000/login.php` and log in with the following credentials:
+1. **Log In**: Go to `http://localhost:8000/login.php` and log in with the following credentials:
    - **Username**: `user`
    - **Password**: `password`
 
