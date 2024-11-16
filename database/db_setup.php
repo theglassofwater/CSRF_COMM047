@@ -9,7 +9,6 @@ class MyDB extends SQLite3
 }
 $db = new MyDB;
 
-// creats users table with password and username ( and id as primary key)
 $db->exec("CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)");
 
 // Inserts sammple users with the unique usernames but all with password = "password"

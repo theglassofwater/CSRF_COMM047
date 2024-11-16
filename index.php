@@ -1,56 +1,58 @@
 <?php
+
+
+
 session_start();
 require __DIR__ . '/inc/header.php';
 
-$errors = [];
-
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
+if (isset($_SESSION['username'])) {
+    $_SESSION = [];
+    session_destroy();
+}
+if ($enable_csrf) {
+    unset($enable_csrf);
 }
 
-// Check if CSRF protection is enabled for this session
-$enable_csrf = isset($_SESSION['csrf_token']);
+$errors = [];
+// $db = new SQLite3(__DIR__ . '/database/database.sqlite');
 
-// Process the form submission for password change
+// Generate CSRF token 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enable_csrf'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $new_password = trim($_POST['new_password']);
+    $enable_csrf = isset($_POST['enable_csrf']);
 
-    // CSRF validation if enabled
-    if ($enable_csrf) {
-        $csrf_token = $_POST['csrf_token'] ?? '';
-        if (empty($csrf_token) || $csrf_token !== ($_SESSION['csrf_token'] ?? '')) {
-            $errors[] = "Invalid CSRF token.";
-        }
-    }
+    // if ($enable_csrf) {
+    //     $csrf_token = $_POST['csrf_token'] ?? '';
+    //     if (empty($csrf_token) || $csrf_token !== ($_SESSION['csrf_token'] ?? '')) {
+    //         $errors[] = "Invalid CSRF token.";
+    //     }
+    // }
 
-    if (!$errors) {
-        if (empty($new_password)) {
-            $errors[] = "Password cannot be empty.";
-        } else {
-            // $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-            $username = $_SESSION['username'];
 
-            // Connect to the database and update password
-            $db = new SQLite3(__DIR__ . '/database/database.sqlite');
-            $stmt = $db->prepare("UPDATE users SET password = :new_password WHERE username = :username");
-            if ($stmt) {
-                $stmt->bindValue(':new_password', $new_password);
-                $stmt->bindValue(':username', $username);
-                $stmt->execute();
-                echo '<h2>Password Changed Successfully</h2>';
-                echo '<p>Your password has been updated. Please log in again.</p>';
-                echo '<a href="login.php"><button>Go to Login Page</button></a>';
-                exit();
-            } else {
-                $errors[] = "Failed to prepare SQL statement for updating the password.";
-            }
-        }
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+
+    $db = new SQLite3(__DIR__ . '/database/database.sqlite');
+
+    $stmt = $db->prepare("SELECT * FROM users WHERE username = :username");
+    $stmt->bindValue(':username', $username, SQLITE3_TEXT);
+    $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+
+    if ($password == $result["password"]) {
+        $_SESSION['username'] = $username;
+        header("Location: change_password.php");
+        exit();
+    } else {
+        $errors[] = "Invalid username or password.";
     }
 }
 ?>
 
-<h2>Change Password</h2>
+<h2>Login</h2>
 <?php if ($errors): ?>
     <div>
         <?php foreach ($errors as $error): ?>
@@ -60,14 +62,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php endif; ?>
 
 <form action="index.php" method="POST">
-    <label for="new_password">New Password:</label>
-    <input type="password" name="new_password" required><br>
+    <label for="username">Username:</label>
+    <input type="text" name="username" required><br>
 
-    <?php if ($enable_csrf): ?>
+    <label for="password">Password:</label>
+    <input type="password" name="password" required><br>
+
+    <label for="enable_csrf">Enable CSRF Protection:</label>
+    <input type="checkbox" name="enable_csrf" id="enable_csrf"
+           onchange="toggleCSRFTokenField(this.checked);"><br>
+
+    <?php if (!empty($_SESSION['csrf_token']) && isset($_POST['enable_csrf'])): ?>
         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
     <?php endif; ?>
 
-    <button type="submit">Change Password</button>
+    <button type="submit">Login</button>
 </form>
+
+<script>
+function toggleCSRFTokenField(enabled) {
+    if (enabled) {
+        document.querySelector('[name="csrf_token"]').value = "<?php echo $_SESSION['csrf_token'] ?? ''; ?>";
+    } else {
+        document.querySelector('[name="csrf_token"]').value = '';
+    }
+}
+</script>
 
 <?php require __DIR__ . '/inc/footer.php'; ?>

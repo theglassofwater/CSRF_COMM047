@@ -2,21 +2,20 @@ In this example, we simulate a scenario where an attacker can change a user's pa
 
 ## Setup
 
-1. Clone this repository or download the files.
-2. Install PHP and SQLite if they’re not already installed.
-3. Set up the SQLite database by running `db_setup.php` to create a sample user.
+1. Clone this repo, and have PHP and SQLite installed.
+2. Set up the SQLite database by running `db_setup.php` to create a sample user.
 
     ```bash
     php db_setup.php
     ```
 
-4. Start a local PHP server:
+3. Start a local PHP server:
 
     ```bash
     php -S localhost:8000
     ```
 
-5. Access the website at `http://localhost:8000`.
+5. Go to `http://localhost:8000`.
 
 ## Files
 
