@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div>
     <h3>Advert</h3>
     <p>Click Link below to get £1000 pounds for free!</p>
-        <a href="hacked_site.html" target="_blank">
+        <a href="hacked_site.html">
             <p>
                 Click here to learn more
             </p>
