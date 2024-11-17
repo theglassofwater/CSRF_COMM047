@@ -63,11 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <button type="submit">Change Password</button>
 </form>
-<?php if ($csrf_token): ?>
-    <div>
-        CSRF Protection Activated!
-    </div>
-<?php endif; ?>
+<?php foreach ($errors as $error): ?>
+    <p style="color:red;"><?php echo $error; ?></p>
+<?php endforeach; ?>
 <div>
     <h3>Advert</h3>
     <p>Click Link below to get £1000 pounds for free!</p>

@@ -17,7 +17,7 @@ $errors = [];
 // $db = new SQLite3(__DIR__ . '/database/database.sqlite');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enable_csrf'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); #rand(0,100000);#random_bytes(32);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
