@@ -37,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $db = new SQLite3(__DIR__ . '/database/database.sqlite');
 
-    $stmt = $db->prepare("SELECT * FROM users WHERE username = :username");
-    $stmt->bindValue(':username', $username, SQLITE3_TEXT);
-    $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+    $query = $db->prepare("SELECT * FROM users WHERE username = :username");
+    $query->bindValue(':username', $username, SQLITE3_TEXT);
+    $output = $query->execute()->fetchArray(SQLITE3_ASSOC);
 
-    if ($password == $result["password"]) {
+    if ($password == $output["password"]) {
         $_SESSION['username'] = $username;
         header("Location: change_password.php");
         exit();
