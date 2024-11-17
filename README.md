@@ -29,7 +29,7 @@ This CSRF pretection works by generating a unique CSRF token for each user sessi
 5. Go to `http://localhost:3000`.
 
 
-## Usage
+## How to use
 
 1. Log In: log in with the following credentials:
    Username = `user1`
@@ -41,6 +41,6 @@ This CSRF pretection works by generating a unique CSRF token for each user sessi
 
 4. To be the victim of the CSRF attack: Log in, then click the advert which changes your password to  `hacked_password`
 
-## Preventing CSRF
+## How to prevent CSRF
 
 To prevent the CSRF attack, just tick the CSRF prevention box on the log in page. Then test trying to click the advert.
