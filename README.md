@@ -13,7 +13,7 @@ This CSRF pretection works by generating a unique CSRF token for each user sessi
 (I have a Linux Unbuntu machine, so i hope this works on your machine aswell)
 
 1. Clone this repository, and have installed PHP and SQLite, and have enabled SQLite3 for PHP.
-2. cd into CSRF_COMM047 directory.
+2. cd into CSRF_COMM047 or CSRF_COMM047-main directory.
 3. Run this PHP script that sets up the database and adds 3 sample users, using the following command:
 
     ```bash
